@@ -29,8 +29,6 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
         void FixedUpdate()
         {
             TankVelocity();
-
-
         }
 
         private void TankVelocity()
@@ -38,26 +36,29 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             Vector3 right_vel = transform.forward * speed * right_input;
             Vector3 left_vel = transform.forward * speed * left_input;
 
+            Vector3 apply_vel = new Vector3(right_vel.x + left_vel.x, 0, right_vel.z + right_vel.z);
+
             float turn = right_input - left_input;
 
 
             rb.AddTorque(Vector3.up * turn * turn_speed, ForceMode.Acceleration);
 
-            rb.AddForce((right_vel + left_vel) * speed, ForceMode.Acceleration);
+            rb.AddForce(apply_vel * speed, ForceMode.Acceleration);
 
 
             // Clamp the velocity
+            //rb.linearVelocity += Physics.gravity * 0.1f;
             rb.linearVelocity = ClampSpeed(rb.linearVelocity);
             rb.angularVelocity = ClampSpeed(rb.angularVelocity);
 
-            rb.linearVelocity *= damping;
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * damping, rb.linearVelocity.y, rb.linearVelocity.z * damping);
             rb.angularVelocity *= damping;
         }
 
         private Vector3 ClampSpeed(Vector3 vel)
         {
             vel.x = Mathf.Clamp(vel.x, -10, 10);
-            vel.y = Mathf.Clamp(vel.y, -5, 5);
+            vel.y = Mathf.Clamp(vel.y, -20, 5);
             vel.z = Mathf.Clamp(vel.z, -10, 10);
 
             return vel;
@@ -106,15 +107,6 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             {
                 input.y = con.ReadValue<float>();
             }
-        }
-
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(right_wheel_offset + transform.position, 0.5f);
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(left_wheel_offset + transform.position, 0.5f);
         }
     }
 }
