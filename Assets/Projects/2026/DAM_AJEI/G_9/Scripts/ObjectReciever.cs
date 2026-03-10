@@ -1,42 +1,46 @@
 using UnityEngine;
 
-public class ObjectReceiver : MonoBehaviour
+namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 {
-    public bool objectInserted = false;
-    public GameObject storedObject;
-    public Transform teleportTarget;
 
-    void OnTriggerEnter(Collider other)
+    public class SC_ObjectReceiver : MonoBehaviour
     {
-        if (!objectInserted)
+        public bool objectInserted = false;
+        public GameObject storedObject;
+        public Transform teleportTarget;
+
+        void OnTriggerEnter(Collider other)
         {
-            storedObject = other.gameObject;
-            objectInserted = true;
+            if (!objectInserted)
+            {
+                storedObject = other.gameObject;
+                objectInserted = true;
 
-            storedObject.SetActive(false);
+                storedObject.SetActive(false);
 
-            Debug.Log("Objeto insertado correctamente.");
+                Debug.Log("Objeto insertado correctamente.");
+            }
         }
-    }
 
-    // Ahora devolvemos un bool indicando si la activación fue exitosa
-    public bool Activate()
-    {
-        if (objectInserted && storedObject != null)
+        // Ahora devolvemos un bool indicando si la activación fue exitosa
+        public bool Activate()
         {
-            storedObject.transform.position = teleportTarget.position;
-            storedObject.SetActive(true);
+            if (objectInserted && storedObject != null)
+            {
+                storedObject.transform.position = teleportTarget.position;
+                storedObject.SetActive(true);
 
-            objectInserted = false;
-            storedObject = null;
+                objectInserted = false;
+                storedObject = null;
 
-            Debug.Log("Sistema activado correctamente. Objeto movido.");
-            return true;
-        }
-        else
-        {
-            Debug.Log("No puedes activar el sistema. No hay objeto.");
-            return false;
+                Debug.Log("Sistema activado correctamente. Objeto movido.");
+                return true;
+            }
+            else
+            {
+                Debug.Log("No puedes activar el sistema. No hay objeto.");
+                return false;
+            }
         }
     }
 }
