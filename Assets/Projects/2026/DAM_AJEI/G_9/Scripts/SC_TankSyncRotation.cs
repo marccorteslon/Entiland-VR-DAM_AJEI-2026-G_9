@@ -7,6 +7,7 @@ public class SC_TankSyncRotation : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, tank_transform.rotation, Time.deltaTime * rotation_speed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, tank_transform.rotation, Time.deltaTime * rotation_speed);
     }
+
 }
