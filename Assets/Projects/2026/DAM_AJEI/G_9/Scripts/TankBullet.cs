@@ -9,9 +9,5 @@ public class TankBullet : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 }
