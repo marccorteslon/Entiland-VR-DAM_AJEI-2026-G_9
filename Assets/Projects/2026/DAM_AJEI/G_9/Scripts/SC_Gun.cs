@@ -28,7 +28,7 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 
             _rb.AddForce(-transform.forward * shoot_force, ForceMode.Impulse);
 
-            if (Physics.SphereCast(transform.position, 0.25f, transform.forward, out RaycastHit hit, layer_player))
+            if (Physics.SphereCast(transform.position, 0.01f, transform.forward, out RaycastHit hit, layer_player))
             {
                 SceneManager.LoadScene(0);
             }

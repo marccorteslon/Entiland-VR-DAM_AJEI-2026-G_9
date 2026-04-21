@@ -22,7 +22,6 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             if (!objectInserted)
             {
                 storedObject = other.gameObject;
-                objectInserted = true;
 
                 storedObject.SetActive(false);
                 // Añade una bala a la recámara

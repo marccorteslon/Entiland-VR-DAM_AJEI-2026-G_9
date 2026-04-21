@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7293588762970172705}
   - component: {fileID: 7077743158104924864}
   - component: {fileID: -3537628824126874652}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Diana
   m_TagString: Enemy
   m_Icon: {fileID: 0}
