@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class TankBullet : MonoBehaviour
+namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 {
-    private void OnCollisionEnter(Collision collision)
+    public class TankBullet : MonoBehaviour
     {
-        if (collision.gameObject.CompareTag("Diana"))
+        private void OnCollisionEnter(Collision collision)
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            if (collision.gameObject.CompareTag("Diana"))
+            {
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+            }
         }
     }
 }

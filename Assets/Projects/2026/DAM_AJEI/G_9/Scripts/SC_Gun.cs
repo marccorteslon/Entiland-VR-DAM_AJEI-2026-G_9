@@ -1,26 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SC_Gun : MonoBehaviour
+namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 {
-    public LayerMask layer_player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class SC_Gun : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Shoot()
-    {
-        if (Physics.SphereCast(transform.position, 0.25f, transform.forward, out RaycastHit hit, layer_player))
+        public LayerMask layer_player;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            SceneManager.LoadScene(0);
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        public void Shoot()
+        {
+            if (Physics.SphereCast(transform.position, 0.25f, transform.forward, out RaycastHit hit, layer_player))
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }

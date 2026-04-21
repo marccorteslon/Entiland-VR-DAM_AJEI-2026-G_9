@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class SC_TankSyncRotation : MonoBehaviour
+namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 {
-    public Transform tank_transform;
-    public float rotation_speed = 5;
-
-    void Update()
+    public class SC_TankSyncRotation : MonoBehaviour
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, tank_transform.rotation, Time.deltaTime * rotation_speed);
-    }
+        public Transform tank_transform;
+        public float rotation_speed = 5;
 
+        void Update()
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, tank_transform.rotation, Time.deltaTime * rotation_speed);
+        }
+
+    }
 }
