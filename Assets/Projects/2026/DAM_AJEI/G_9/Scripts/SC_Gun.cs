@@ -2,11 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 {
     public class SC_Gun : MonoBehaviour
     {
+        public static SC_Gun instance { get; private set; }
         public LayerMask layer_player;
         public float shoot_force = 10;
 
@@ -17,6 +20,11 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
         private AudioSource _audioSource;
         private Rigidbody _rb;
 
+        private void Awake()
+        {
+            instance = this;
+
+        }
         void Start()
         {
             _audioSource = GetComponent<AudioSource>();
@@ -38,12 +46,32 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             // Activar vignette al disparar
             if (vignette != null)
             {
-                vignette.intensity.value = 1f; 
+                LerpVignette();
             }
 
-            if (Physics.SphereCast(transform.position, 0.25f, transform.forward, out RaycastHit hit, layer_player))
+            if (Physics.SphereCast(transform.position, 0.2f, transform.forward, out RaycastHit hit, layer_player))
             {
-                SceneManager.LoadScene(0);
+                SC_ScoreManager.instance.EndGame();
+            }
+        }
+        public void LerpVignette()
+        {
+            StartCoroutine(LerpVignetteRoutine());
+        }
+        private IEnumerator LerpVignetteRoutine()
+        {
+            float duration = 1;
+            float timer = 0;
+
+            while (timer < duration)
+            {
+                float t = timer / duration;
+                t = Mathf.SmoothStep(0, 1, t);
+
+                vignette.intensity.value = t;
+
+                timer += Time.deltaTime;
+                yield return null;
             }
         }
     }
