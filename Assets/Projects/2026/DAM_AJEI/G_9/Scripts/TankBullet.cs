@@ -6,8 +6,9 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
     {
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Diana"))
+            if (collision.gameObject.CompareTag("Enemy"))
             {
+                SC_ScoreManager.instance.AddDiana();
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
             }

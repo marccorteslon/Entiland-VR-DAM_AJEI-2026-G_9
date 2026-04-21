@@ -12,6 +12,11 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
         public float round;
         public float vehicle_step = 0.5f;
 
+        [Header("References")]
+        public SC_Tank tank;
+        public GameObject diana;
+        public int diana_amount = 50;
+
         private Mesh mesh;
         private MeshCollider meshCollider;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -88,6 +93,20 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 
             meshCollider.sharedMesh = null;
             meshCollider.sharedMesh = mesh;
+
+            for (int i = 0; i < diana_amount; i++)
+            {
+                int x = Random.Range(0, width + 1);
+                int z = Random.Range(0, heigth + 1);
+
+                int index = z * (width + 1) + x;
+                Vector3 pos = transform.TransformPoint(vertices[index]) + Vector3.up * 2;
+
+                GameObject d = Instantiate(diana, pos, Quaternion.identity);
+                SC_LookAtTarget look = d.GetComponent<SC_LookAtTarget>();
+                if (look != null)
+                    look.target = tank.transform;
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
 
         [Header("Audio")]
         public AudioClip activationSound;
-        private AudioSource audioSource;
+        public AudioSource audioSource;
 
         void Awake()
         {

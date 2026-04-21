@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,15 +12,27 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
         public float turn_speed;
         public Vector3 right_wheel_offset, left_wheel_offset;
         [Range(0, 1)]public float damping = 0.99f;
+        public float shoot_force = 10;
 
         public float right_input = 0, left_input = 0;
         private Vector2 input;
         private Rigidbody rb;
 
+        [Header("Camera")]
+        public Transform targetCamera;
+        public float distance_traveled = 0.5f;
+        private Coroutine routine_camera;
+        private Vector3 pos_camera_start;
+
+        [Header("Particles")]
+        public ParticleSystem parts_shoot;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             rb = GetComponent<Rigidbody>();
+
+            pos_camera_start = targetCamera.transform.localPosition;
 
             right_wheel_offset += transform.position;
             left_wheel_offset += transform.position;
@@ -92,6 +105,52 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
                 right_input = 0;
                 left_input = 0;
             }
+        }
+
+        public void Shoot()
+        {
+            // Si la rutina se está ejecutando no la ejecutará otra vez
+            if (routine_camera != null) return;
+            routine_camera = StartCoroutine(ShootCameraRoutine());
+
+            parts_shoot.Play();
+        }
+        private IEnumerator ShootCameraRoutine()
+        {
+            float duration = 1;
+            float timer = 0;
+
+            Vector3 pos_end = targetCamera.transform.localPosition - transform.InverseTransformDirection(transform.forward) * distance_traveled;
+
+            while (timer < duration * 0.1f)
+            {
+                float t = timer / duration;
+
+                targetCamera.transform.localPosition = Vector3.Lerp(pos_camera_start, pos_end, t);
+
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            pos_end = targetCamera.localPosition;
+
+            timer = 0;
+            while (timer < duration)
+            {
+                float t = timer / duration;
+                t = Mathf.SmoothStep(0, 1, t);
+                targetCamera.transform.localPosition = Vector3.Lerp(pos_end, pos_camera_start, t);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            // Retaura la posición de la cámara
+            targetCamera.transform.localPosition = pos_camera_start;
+
+            // Permite que se vuelva a ejecutar la rutina
+            routine_camera = null;
         }
     
         public void ProcessRightInput(InputAction.CallbackContext con)

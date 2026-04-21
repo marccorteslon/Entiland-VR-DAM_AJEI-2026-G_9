@@ -8,6 +8,14 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
         public bool objectInserted = false;
         public GameObject storedObject;
         public Transform teleportTarget;
+        public TankCannon tankCannon;
+
+        private AudioSource _audioSource;
+
+        private void Start()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
         void OnTriggerEnter(Collider other)
         {
@@ -17,6 +25,10 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
                 objectInserted = true;
 
                 storedObject.SetActive(false);
+                // Añade una bala a la recámara
+                tankCannon.AddBullet();
+
+                _audioSource.Play();
 
                 Debug.Log("Objeto insertado correctamente.");
             }
