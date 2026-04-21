@@ -17,12 +17,14 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
         public float right_input = 0, left_input = 0;
         private Vector2 input;
         private Rigidbody rb;
+        public LayerMask layer_diana;
 
         [Header("Camera")]
         public Transform targetCamera;
         public float distance_traveled = 0.5f;
         private Coroutine routine_camera;
         private Vector3 pos_camera_start;
+        public TankCannon tankCannon;
 
         [Header("Particles")]
         public ParticleSystem parts_shoot;
@@ -114,6 +116,13 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             routine_camera = StartCoroutine(ShootCameraRoutine());
 
             parts_shoot.Play();
+            tankCannon.RemoveBullet();
+
+            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out RaycastHit hit, 999, layer_diana))
+            {
+                SC_ScoreManager.instance.AddDiana();
+                Destroy(hit.collider.gameObject);
+            }
         }
         private IEnumerator ShootCameraRoutine()
         {

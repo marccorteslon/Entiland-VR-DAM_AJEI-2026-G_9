@@ -23,7 +23,7 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             _opened = true;
 
             transform.localScale = Vector3.zero;
-            _meshRenderer.enabled = false;
+            _meshRenderer.enabled = true;
 
             StartCoroutine(OpenTvRoutine());
         }

@@ -62,5 +62,11 @@ namespace EntilandVR.DosSeis.DAM_VIOD.G_Nueve
             bullets++;
             txt_bullets.text = bullets.ToString();
         }
+        public void RemoveBullet()
+        {
+            bullets--;
+            if (bullets < 0) { bullets = 0; }
+            txt_bullets.text = bullets.ToString();
+        }
     }
 }
